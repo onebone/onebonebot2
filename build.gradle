@@ -1,0 +1,42 @@
+buildscript {
+    ext.kotlin_version = "1.2.41"
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.2.41"
+}
+
+apply plugin: "kotlin"
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+sourceSets {
+    main.kotlin.srcDirs += "src"
+    main.resources.srcDirs += "resources"
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile 'org.jsoup:jsoup:1.11.3'
+    compile group: 'org.telegram', name: 'telegrambots', version: '3.5'
+    compile 'com.beust:klaxon:3.0.1'
+    compile 'org.apache.httpcomponents:httpclient:4.5.5'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'me.onebone.tgbot.MainKt'
+    }
+    from { configurations.compile.collect {it.isDirectory() ? it : zipTree(it) } }
+}
