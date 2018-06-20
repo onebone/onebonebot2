@@ -16,9 +16,10 @@ class Bot(
 
 	override fun onUpdateReceived(update: Update) {
 		if(update.hasMessage() && update.getMessage().hasText()){
-			val msg = SendMessage()
-					.setChatId(update.getMessage().getChatId())
-					.setText("Hello World")
+			val msg = SendMessage().apply {
+				chatId = update.message.chatId.toString()
+				text = "Hello World"
+			}
 
 			try{
 				execute(msg)
